@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "biome check",
-    "format": "biome format --write"
+    "format": "biome format --write",
+    "db:migrate": "prisma migrate dev",
+    "db:generate": "prisma generate dev",
+    "db:studio": "prisma studio"
   },
   "dependencies": {
     "init": "^0.1.2",
