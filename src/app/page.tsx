@@ -1,7 +1,9 @@
-import { db } from "@/lib/db";
+import { Button } from "@/components/ui/button";
 
 export default async function Home() {
-  const user = await db.user.findFirst();
-
-  return <div>{JSON.stringify(user)}</div>;
+  return (
+    <div>
+      <Button>Submit</Button>
+    </div>
+  );
 }
