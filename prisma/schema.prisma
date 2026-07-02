@@ -13,7 +13,90 @@ datasource db {
 }
 
 model User {
-  id    String @id @default(uuid())
-  name  String
-  email String @unique
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  meals     Meal[]
+  role      Role
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model Food {
+  id               String            @id @default(uuid())
+  name             String            @unique
+  calories         Float?
+  protein          Float?
+  fat              Float?
+  carbohydrates    Float?
+  fiber            Float?
+  sugar            Float?
+  category         Category?         @relation(fields: [categoryId], references: [id])
+  categoryId       String?
+  foodServingUnits FoodServingUnit[]
+  meal             Meal?             @relation(fields: [mealId], references: [id])
+  mealId           String?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  mealFoods        MealFood[]
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  foods     Food[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ServingUnit {
+  id               String            @id @default(uuid())
+  name             String            @unique
+  foodServingUnits FoodServingUnit[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  mealFoods        MealFood[]
+}
+
+// Join table for many-to-many relationship between Food and ServingUnit
+model FoodServingUnit {
+  id            String      @id @default(uuid())
+  food          Food        @relation(fields: [foodId], references: [id])
+  foodId        String
+  servingUnit   ServingUnit @relation(fields: [servingUnitId], references: [id])
+  servingUnitId String
+  grams         Float
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model Meal {
+  id        String     @id @default(uuid())
+  dateTime  DateTime
+  foods     Food[]
+  user      User       @relation(fields: [userId], references: [id])
+  userId    String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  mealFoods MealFood[]
+}
+
+// Join table for many-to-many relationship between Meal and Food
+model MealFood {
+  id            String      @id @default(uuid())
+  meal          Meal        @relation(fields: [mealId], references: [id])
+  mealId        String
+  food          Food        @relation(fields: [foodId], references: [id])
+  foodId        String
+  servingUnit   ServingUnit @relation(fields: [servingUnitId], references: [id])
+  servingUnitId String
+  amount        Float
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 }
