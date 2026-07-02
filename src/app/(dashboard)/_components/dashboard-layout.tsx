@@ -1,22 +1,7 @@
 "use client";
-
+import { ThemeToggle } from "@/components/theme-toggle";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import {
-  Apple,
-  Boxes,
-  ChevronDown,
-  ChevronLeftIcon,
-  LogOut,
-  MenuIcon,
-  Ruler,
-  Utensils,
-} from "lucide-react";
-import { usePathname } from "next/navigation";
-import { Collapsible } from "radix-ui";
-import { ReactNode, useState } from "react";
-import { motion } from "motion/react";
-import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,9 +10,22 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-
-type DashboardLayoutProps = { children: React.ReactNode };
+import { Separator } from "@/components/ui/separator";
+import * as Collapsible from "@radix-ui/react-collapsible";
+import { motion } from "framer-motion";
+import {
+  Apple,
+  Boxes,
+  ChevronDown,
+  ChevronLeft,
+  LogOut,
+  Menu,
+  Ruler,
+  Utensils,
+} from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { ReactNode, useState } from "react";
 
 type RouteGroup = {
   group: string;
@@ -71,51 +69,58 @@ const ROUTE_GROUPS: RouteGroup[] = [
   },
 ];
 
+type DashboardLayoutProps = { children: ReactNode };
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const [open, setOpen] = useState(false);
+  const userRole = "user";
 
   return (
-    <div className="bg-background fixed z-10 flex h-13 w-screen items-center justify-between border px-2">
-      <Collapsible.Root className="h-full" open={open} onOpenChange={setOpen}>
-        <Collapsible.Trigger className="mt-2" asChild>
-          <Button size="icon" variant="ghost">
-            <MenuIcon />
-          </Button>
-        </Collapsible.Trigger>
-      </Collapsible.Root>
-      <div className="flex">
-        {/* {ThemeToggle} */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              className="flex h-9 items-center gap-2 px-2"
-            >
-              <Avatar className="size-8">
-                <AvatarFallback>A</AvatarFallback>
-              </Avatar>
-              <span className="hidden md:inline">Admin</span>
+    <div className="flex">
+      <div className="bg-background fixed z-10 flex h-13 w-screen items-center justify-between border px-2">
+        <Collapsible.Root className="h-full" open={open} onOpenChange={setOpen}>
+          <Collapsible.Trigger className="m-2" asChild>
+            <Button size="icon" variant="outline">
+              <Menu />
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <div className="flex items-center gap-3 px-2 py-1.5">
-              <Avatar className="size-10">
-                <AvatarFallback>A</AvatarFallback>
-              </Avatar>
-              <div>
-                <p className="text-sm font-medium">Admin</p>
-                <p className="text-muted-foreground text-xs">admin@email.com</p>
+          </Collapsible.Trigger>
+        </Collapsible.Root>
+        <div className="flex items-center gap-x-2">
+          <ThemeToggle />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="flex h-9 items-center gap-2 px-2"
+              >
+                <Avatar className="size-8">
+                  <AvatarFallback>A</AvatarFallback>
+                </Avatar>
+                <span className="hidden md:inline">Admin</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <div className="flex items-center gap-3 px-2 py-1.5">
+                <Avatar className="size-10">
+                  <AvatarFallback>A</AvatarFallback>
+                </Avatar>
+                <div>
+                  <p className="text-sm font-medium">Admin</p>
+                  <p className="text-muted-foreground text-xs">
+                    admin@email.com
+                  </p>
+                </div>
               </div>
-            </div>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem variant="destructive">
-              <LogOut className="size-4" />
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem variant="destructive">
+                <LogOut className="size-4" /> Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
+
       <Collapsible.Root
         className="fixed top-0 left-0 z-20 h-dvh"
         open={open}
@@ -123,17 +128,21 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       >
         <Collapsible.Content forceMount>
           <div
-            className={`bg-background fixed top-0 left-0 h-screen w-64 border p-4 transition-transform duration-300 ${open ? "translate-x-0" : "-translate-x-full"}`}
+            className={`bg-background fixed top-0 left-0 h-screen w-64 border p-4 transition-transform duration-300 ${
+              open ? "translate-x-0" : "-translate-x-full"
+            }`}
           >
             <div className="flex items-center justify-between">
               <h1 className="font-semibold">Admin Dashboard</h1>
               <Collapsible.Trigger asChild>
-                <Button size="icon" variant="ghost">
-                  <ChevronLeftIcon />
+                <Button size="icon" variant="outline">
+                  <ChevronLeft />
                 </Button>
               </Collapsible.Trigger>
             </div>
+
             <Separator className="my-2" />
+
             <div className="mt-4 flex flex-col">
               {ROUTE_GROUPS.map((routeGroup) => (
                 <RouteGroup {...routeGroup} key={routeGroup.group} />
@@ -153,11 +162,11 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   );
 }
 
-type RouteGroupType = RouteGroup;
-
-function RouteGroup({ group, items }: RouteGroupType) {
+type RouteGroupProps = RouteGroup;
+function RouteGroup({ group, items }: RouteGroupProps) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+
   return (
     <Collapsible.Root open={open} onOpenChange={setOpen}>
       <Collapsible.Trigger asChild>
