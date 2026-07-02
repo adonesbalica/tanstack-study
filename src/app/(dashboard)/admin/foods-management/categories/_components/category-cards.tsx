@@ -5,13 +5,17 @@ import { useDeleteCategory } from "../_services/use-category-mutations";
 import { useCategories } from "../_services/use-category-queries";
 import { Button } from "@/components/ui/button";
 import { alert } from "@/lib/use-global-store";
+import { useCategoriesStore } from "../_libs/use-category-store";
 
 export function CategoryCards() {
+  const { updateSelectedCategoryId, updateCategoryDialogOpen } =
+    useCategoriesStore();
+
   const categoriesQuery = useCategories();
   const deleteCategoryMutation = useDeleteCategory();
 
   return (
-    <div className="grid grid-cols-4">
+    <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-4">
       {categoriesQuery.data?.map((item) => (
         <div
           className="flex flex-col justify-between gap-3 rounded-lg border p-6"
@@ -23,7 +27,10 @@ export function CategoryCards() {
               className="size-6"
               variant="ghost"
               size="icon"
-              onClick={() => {}}
+              onClick={() => {
+                updateSelectedCategoryId(item.id);
+                updateCategoryDialogOpen(true);
+              }}
             >
               <Edit />
             </Button>

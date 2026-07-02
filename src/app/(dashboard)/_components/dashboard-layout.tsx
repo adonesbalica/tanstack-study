@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
+import { customErrorMap } from "@/lib/customErrorMap";
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { motion } from "framer-motion";
 import {
@@ -26,6 +27,8 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode, useState } from "react";
+import { z } from "zod";
+z.setErrorMap(customErrorMap);
 
 type RouteGroup = {
   group: string;
@@ -72,7 +75,6 @@ const ROUTE_GROUPS: RouteGroup[] = [
 type DashboardLayoutProps = { children: ReactNode };
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const [open, setOpen] = useState(false);
-  const userRole = "user";
 
   return (
     <div className="flex">
