@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Geist, Geist_Mono, Roboto } from "next/font/google";
+import { Geist, Geist_Mono, Roboto, Outfit } from "next/font/google";
 import type React from "react";
 import { cn } from "@/lib/utils";
 import { Providers } from "@/components/provider";
 
-const roboto = Roboto({ subsets: ["latin"], variable: "--font-sans" });
+const outfit = Outfit({subsets:['latin'],variable:'--font-sans'});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,7 +36,7 @@ export default function RootLayout({
         geistSans.variable,
         geistMono.variable,
         "font-sans",
-        roboto.variable,
+        outfit.variable,
       )}
       suppressHydrationWarning
     >

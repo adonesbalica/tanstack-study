@@ -4,6 +4,8 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { Toaster } from "./ui/sonner";
+import { AlertDialogProvider } from "./ui/alert-dialog-provider";
 
 type ProvidersProps = {
   children: ReactNode;
@@ -32,7 +34,9 @@ export function Providers({ children }: ProvidersProps) {
         enableSystem
         disableTransitionOnChange
       >
-        <NextThemesProvider>{children}</NextThemesProvider>
+        <Toaster />
+        <AlertDialogProvider />
+        {children}
       </NextThemesProvider>
     </QueryClientProvider>
   );
