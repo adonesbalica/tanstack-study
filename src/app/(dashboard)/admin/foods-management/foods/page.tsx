@@ -1,3 +1,14 @@
-export default function Page() {
-  return <>Foods</>;
-}
+import { FoodFormDialog } from "./_components/food-form-dialog";
+
+const Page = () => {
+  return (
+    <div className="space-y-2">
+      <div className="mb-6 flex items-center justify-between">
+        <h1 className="text-3xl font-semibold">Foods List</h1>
+        <FoodFormDialog />
+      </div>
+    </div>
+  );
+};
+
+export default Page;
