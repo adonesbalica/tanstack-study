@@ -3,9 +3,9 @@ import "./globals.css";
 import { Geist, Geist_Mono, Roboto, Outfit } from "next/font/google";
 import type React from "react";
 import { cn } from "@/lib/utils";
-import { Providers } from "@/components/provider";
+import { Providers } from "@/components/providers";
 
-const outfit = Outfit({subsets:['latin'],variable:'--font-sans'});
+const outfit = Outfit({ subsets: ["latin"], variable: "--font-sans" });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
